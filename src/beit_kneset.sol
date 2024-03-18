@@ -5,11 +5,15 @@ contract ReceiveEther {
     // Event to log the withdrawal from the contract
     event Withdrawal(address indexed recipient, uint256 amount);
     address private owner;
-    address[] private authorizedWithdrawers;
-    constructor(address[] memory _authorizedWithdrawers) {
-        require(_authorizedWithdrawers.length == 3, "Exactly three authorized withdrawers required");
+    address private authorizedWithdrawer1;
+    address private authorizedWithdrawer2;
+    address private authorizedWithdrawer3;
+    constructor(address _authorizedWithdrawer1, address _authorizedWithdrawer2, address _authorizedWithdrawer3) {
+        require(_authorizedWithdrawer1 != address(0) && _authorizedWithdrawer2 != address(0) && _authorizedWithdrawer3 != address(0), "Authorized withdrawers cannot be zero address");
         owner = msg.sender;
-        authorizedWithdrawers = _authorizedWithdrawers;
+        authorizedWithdrawer1 = _authorizedWithdrawer1;
+        authorizedWithdrawer2 = _authorizedWithdrawer2;
+        authorizedWithdrawer3 = _authorizedWithdrawer3;
     }
     // Function to receive Ether
     receive() external payable {
@@ -29,17 +33,18 @@ contract ReceiveEther {
     }
     // Function to check if an address is authorized to withdraw
     function isAuthorized(address _address) private view returns (bool) {
-        if (_address == owner) {
-            return true;
-        }
-        for (uint256 i = 0; i < authorizedWithdrawers.length; i++) {
-            if (_address == authorizedWithdrawers[i]) {
-                return true;
-            }
-        }
-        return false;
+        return (_address == owner || _address == authorizedWithdrawer1 || _address == authorizedWithdrawer2 || _address == authorizedWithdrawer3);
     }
 }
+
+
+
+
+
+
+
+
+
 
 
 
