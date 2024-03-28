@@ -1,0 +1,17 @@
+---------------------------
+"All sports coupes are automobiles." (All C is B)
+"All automobiles are vehicles." (All B is A)
+"Every sports coupe is a vehicle." (Every C is A)
+---------------------------
+All sedans are vehicles." (All C is B)
+"There is no vehicle that is a bicycle." (There exists no B that is A)
+"There is no sedan that is a bicycle." (There exists no C that is A)
+---------------------------
+"There are IDF trains that are tanks." (There is a G that is a B)
+"Every tank is a vehicle." (every B is an A)
+"There are IDF trains that are vehicles." (There is a G that is an A)
+---------------------------
+
+
+
+
