@@ -22,6 +22,7 @@ contract DepositAndReward {
         require(msg.sender == owner, "not authorized");
         _;
     }
+   
     function deposit(uint _amount) external {
         require(_amount > 0, "amount = 0");
         erc20.transferFrom(msg.sender, address(this), _amount);
@@ -29,49 +30,59 @@ contract DepositAndReward {
         TOTAL_DEPOSITS+=_amount;
     }
 function calc_rewards(uint _amount) private {
-        reward=_amount/TOTAL_DEPOSITS *REWARD_AMOUNT/10;
+     return _amount/TOTAL_DEPOSITS *REWARD_AMOUNT/10;
     }
     function withdrawWithReward(uint _amount) external {
-    require(_amount > 0, "amount = 0");
-    uint BalnceWithReward = getBalnceWithReward(msg.sender);
-    require(BalnceWithReward >= _amount, "insufficient available amount for withdrawal with rewards");
-    uint reward=calc_rewards(_amount);
-    erc20.transfer(address(this),msg.sender, _amount+reward);
-    TOTAL_DEPOSITS-=_amount;
-    REWARD_AMOUNT -=reward;
-   for (uint i = 0; i < deposits[_account].length && _amount>0; i++) {
-    tempAmount=deposits[_account][i];
-    if(tempAmount<amount){
-    amount-=tempAmount;
-    deposits[_account][i]=0;
-    //delete the element by loop!
-    }
-    else{
-         deposits[_account][i]-=tempAmount;
-         amount=0;
-    }
-    }
-    //change
-}
-        function withdrawWithoutReward(uint _amount) external {
-        }
-    function getBalnceWithReward(address _account) public view returns (uint) {
-        uint sum;
-        uint latestDate = block.timestamp - SEVEN_DAYS_IN_SECONDS;
-        // Iterate over deposits for the given account
-        for (uint i = 0; i < deposits[_account].length; i++) {
-            // Check if the deposit date is at least 7 days ago
-            if (i < latestDate) {
-                sum += deposits[_account][i];
-            } else {
-                // If the date is less than seven days ago, exit the loop
-                break;
+        require(_amount > 0, "amount = 0");
+        uint BalnceWithReward = getBalnceWithReward(msg.sender);
+        require(BalnceWithReward >= _amount, "insufficient available amount for withdrawal with rewards");
+        uint reward=calc_rewards(_amount);
+        erc20.transfer(address(this),msg.sender, _amount+reward);
+        TOTAL_DEPOSITS-=_amount;
+        REWARD_AMOUNT -=reward;
+        countZero=0;
+        for (uint i = 0; i < deposits[_account].length && _amount>0; i++) {
+            tempAmount=deposits[_account][i];
+            if(tempAmount<amount){
+            amount-=tempAmount;
+            deposits[_account][i]=0;
+            countZero++;
             }
+            else{
+                deposits[_account][i]-=tempAmount;
+                amount=0;
+            }
+            }
+             for (uint j = countZero; j < deposits[_account].length - 1; j++) {
+                    deposits[_account][j-countZero] = deposits[_account][j];
+                }
+                for (uint j = 0; j < countZero; j++) {
+                    deposits[_account].pop();
+                }
+              
+    
+}
+function withdrawWithoutReward(uint _amount) external {
+}
+
+
+function getBalnceWithReward(address _account) public view returns (uint) 
+{
+    uint sum;
+    uint latestDate = block.timestamp - SEVEN_DAYS_IN_SECONDS;
+    // Iterate over deposits for the given account
+    for (uint i = 0; i < deposits[_account].length; i++) {
+        // Check if the deposit date is at least 7 days ago
+        if (i < latestDate) {
+            sum += deposits[_account][i];
+        } else {
+            // If the date is less than seven days ago, exit the loop
+            break;
         }
-        return sum;
     }
+    return sum;
     }
-    function getTotalBalance(address _account) public view returns (uint) {
+function getTotalBalance(address _account) public view returns (uint) {
     uint totalBalance;
     // Iterate over all timestamps in the deposits mapping for the specified account
     // and sum up all the deposit amounts
@@ -79,5 +90,8 @@ function calc_rewards(uint _amount) private {
         totalBalance += deposits[_account][i];
     }
     return totalBalance;
+}
+function getEstimatedRewards(uint _amount){
+  return calc_rewards(_amounts)  ;
 }
 }
