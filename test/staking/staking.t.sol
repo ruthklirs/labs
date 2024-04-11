@@ -14,6 +14,7 @@ contract TestReward is Test {
     function setUp() public {
         reward = new Reward_4_7();
     }
+    //עובד???r
 
     function testOwnerInitiallySet() public {
         console.log(reward.balanceOf(address(reward)));
