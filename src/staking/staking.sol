@@ -39,6 +39,7 @@ contract Reward_4_7{
     function calcRewards(uint _amount) public view returns (uint) {
         console.log(msg.sender,"calc");
       if (TOTAL_DEPOSITS == 0) return 0;
+     
       return  REWARD_AMOUNT*WAD*(PERCENT/100)*(_amount/TOTAL_DEPOSITS)/WAD;
     }
     function withdraw(uint _amount) external {
@@ -84,6 +85,7 @@ contract Reward_4_7{
         uint latestDate = block.timestamp - 7 days;
         for (uint i = 0; i < userDeposits[_account].length; i++) {
             console.log("@@@",userDeposits[_account][i].amount);
+
             if (userDeposits[_account][i].timestamp< latestDate) {
                 sum += userDeposits[_account][i].amount;
             }
@@ -91,17 +93,3 @@ contract Reward_4_7{
         return sum;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
