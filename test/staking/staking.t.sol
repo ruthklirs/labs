@@ -85,6 +85,7 @@ contract TestReward is Test {
           address adr2 = address(1234);
         vm.startPrank(adr2);
         reward.mint(200);
+        //ki
         reward.approve(adr2, 100);
         reward.deposit(100);
             uint balanceWithReward = reward.getBalanceWithReward(adr2);
