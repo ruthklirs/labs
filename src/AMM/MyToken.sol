@@ -25,8 +25,10 @@ contract MyToken is IERC20 {
     }
 
     function transferFrom(address from, address to, uint256 amount) external returns (bool) {
-        console.log("transferFrom" , msg.sender);
+        console.log("transferFrom" , from);
+        console.log("allowance[from][msg.sender]", allowance[from][msg.sender]);
         allowance[from][msg.sender] -= amount;
+        console.log(" balanceOf[from]",  balanceOf[from]);
         balanceOf[from] -= amount;
         balanceOf[to] += amount;
         emit Transfer(from, to, amount);
