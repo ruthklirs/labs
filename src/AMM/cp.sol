@@ -11,7 +11,6 @@ contract CP {
     uint public reserve1;
     uint public totalSupply;
     mapping(address => uint) public balances;
-
     constructor(address t0, address t1) {
         token0 = MyToken(t0);
         token1 = MyToken(t1);
@@ -36,9 +35,6 @@ contract CP {
             "AMM3-invalid-token"
         );
         require(amountIn > 0, "AMM3-zero-amount");
-    console.log("chek", msg.sender);
-        console.log("addIn", addIn);
-        console.log("amountIn", amountIn);
         bool isToken0 = addIn == address(token0);
         (
             MyToken tokenIn,
@@ -49,14 +45,7 @@ contract CP {
                 ? (token0, token1, reserve0, reserve1)
                 : (token1, token0, reserve1, reserve0);
 
-        console.log("isToken0", isToken0);
-        console.log("msg.sender", msg.sender.balance);
-        console.log("msg.sender-address", msg.sender);
-        console.log("address(this)", address(this));
-        console.log("amountIn", amountIn);
         tokenIn.transferFrom(msg.sender, address(this), amountIn);
-        console.log("msg.sender2", msg.sender.balance);
-
         uint amountInWithFee = (amountIn * 997) / 1000;
         amountOut =
             (reserveOut * amountInWithFee) /
@@ -125,4 +114,5 @@ contract CP {
     function min(uint x, uint y) private pure returns (uint) {
         return x <= y ? x : y;
     }
+    
 }
