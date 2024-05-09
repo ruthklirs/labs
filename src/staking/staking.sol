@@ -77,6 +77,7 @@ contract Reward_4_7{
             userDeposits[msg.sender].pop();
         }
     }
+ 
     function getBalanceWithReward(address _account) public view returns (uint) {
         uint sum = 0;
       console.log("hrrrrrrrrru", _account);
