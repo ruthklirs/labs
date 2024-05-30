@@ -12,8 +12,8 @@ contract Math {
     function wdiv(uint256 num, uint256 denom) internal pure returns (uint256) {
         (bool successMul, uint256 scaledNumber) = num.tryMul(WAD);
         if (!successMul) return 0;
-        (bool successDiv, uint256 rational) = scaledNumber.tryDiv(denom);
-        if (!successDiv) return 0;
+        if (!successDiv) return 0;        (bool successDiv, uint256 rational) = scaledNumber.tryDiv(denom);
+
         return rational;
     }
 

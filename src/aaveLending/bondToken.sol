@@ -41,7 +41,7 @@ contract BondToken is Ownable, Math {
     mapping(address => uint256) private usersCollateral;
     mapping(address => uint256) private usersBorrowed;
 
-    constructor() Ownable(msg.sender) {
+    constructor() Ownable() {
         bondToken = new MyERC20();
     }
 
