@@ -2,9 +2,10 @@
 pragma solidity >=0.6.12 <0.9.0;
 
 contract ReceiveEther {
-   address payable public owner;
+    address payable public owner;
+
     constructor() {
-       owner = payable(msg.sender); // Set the contract deployer as the owner
+        owner = payable(msg.sender); // Set the contract deployer as the owner
     }
 
     // Event to log the deposit to bkokchein
@@ -15,10 +16,7 @@ contract ReceiveEther {
     //external - can accet it from everywhere
     //payable - get eth
     receive() external payable {
-        require(
-            msg.sender.balance >= msg.value,
-            "Insufficient balance to send Ether"
-        );
+        require(msg.sender.balance >= msg.value, "Insufficient balance to send Ether");
         // Emit an event to log the deposit
         emit Deposit(msg.sender, msg.value);
     }
@@ -28,7 +26,7 @@ contract ReceiveEther {
         return address(this).balance;
     }
 
-     // Modifier to restrict access to the owner
+    // Modifier to restrict access to the owner
     modifier onlyOwner() {
         require(msg.sender == owner, "Only the owner can call this function");
         _;

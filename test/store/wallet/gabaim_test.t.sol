@@ -12,9 +12,9 @@
 //     function setUp() public {
 //         gabaim = new Gabaim();
 //         payable(address(gabaim)).transfer(1000);
-     
+
 //     }
-    
+
 //    function testDeposit() public {
 //         uint initialBalance = address(gabaim).balance;
 //         uint amount = 100 wei;
@@ -28,7 +28,7 @@
 //         assertEq(address(gabaim).balance, initialBalance + amount, "Balance should increase after deposit");
 //    vm.stopPrank();
 //     }
-   
+
 //     function testWithdraw() public payable {
 //     uint initialBalance = gabaim.getBalance();
 //     address adr1= address(1234);
@@ -42,22 +42,22 @@
 
 //     function testWithdrawNotMoney() external {
 //        uint sum = 2000;
-      
+
 //         address adr1= address(1234);
 //         vm.prank(adr1);
 //         uint before = address(gabaim).balance;
-        
+
 //         if (before >= sum) {
 //         gabaim.withdraw(sum);
 //         uint afterwithdraw = address(gabaim).balance;
 //         assertEq(afterwithdraw, before - sum);
 //         }
 //         vm.stopPrank();
-       
+
 //     }
 //       function testNotOwnerWithdraw() public {
 //         payable(address(gabaim)).transfer(100);
-       
+
 //         gabaim.withdraw(100);
 //     }
 // }
@@ -80,31 +80,39 @@ contract GabaimTest is Test {
     }
 
     // Test adding authorized persons
-   function testAddAuthorizedPerson() public {
-    // Define a new authorized person
-    address newAuth = address(0x456);
+    function testAddAuthorizedPerson() public {
+        // Define a new authorized person
+        address newAuth = address(0x456);
 
-    // Check if the new authorized person already exists in any of the three slots
-    bool alreadyExists = false;
-    if (gabaim.auth1() == newAuth || gabaim.auth2() == newAuth || gabaim.auth3() == newAuth) {
-        alreadyExists = true;
+        // Check if the new authorized person already exists in any of the three slots
+        bool alreadyExists = false;
+        if (gabaim.auth1() == newAuth || gabaim.auth2() == newAuth || gabaim.auth3() == newAuth) {
+            alreadyExists = true;
+        }
+        // If the new authorized person doesn't exist, add it
+        if (!alreadyExists) {
+            gabaim.addAuthorizedPerson(newAuth);
+        }
     }
-    // If the new authorized person doesn't exist, add it
-    if (!alreadyExists) {
-        gabaim.addAuthorizedPerson(newAuth);
-    }
-   }
 
-// Test repeated addition of authorized persons
+    // Test repeated addition of authorized persons
     function testRepeatedAddAuthorizedPerson() public {
         address existingAuth = gabaim.auth1();
         gabaim.addAuthorizedPerson(existingAuth);
-        assertEq(gabaim.auth1(),existingAuth, "Adding existing authorized person should not change authorization status for auth1");
-        assertEq(gabaim.auth2(), existingAuth, "Adding existing authorized person should not change authorization status for auth2");
+        assertEq(
+            gabaim.auth1(),
+            existingAuth,
+            "Adding existing authorized person should not change authorization status for auth1"
+        );
+        assertEq(
+            gabaim.auth2(),
+            existingAuth,
+            "Adding existing authorized person should not change authorization status for auth2"
+        );
         // assertEq(gabaim.auth3(), existingAuth, "Adding existing authorized person should not change authorization status for auth3");
     }
 
- // Test adding authorized persons when all slots are filled
+    // Test adding authorized persons when all slots are filled
     function testAddAuthorizedPersonAllSlotsFilled() public {
         // Define a new authorized person
         address newAuth = address(0x789);

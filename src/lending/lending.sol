@@ -6,9 +6,9 @@
 // import "forge-std/interfaces/IERC20.sol";
 
 // contract Lending {
-    
+
 //     struct Borrower {
-//         uint256 collateralValue; //ETH 
+//         uint256 collateralValue; //ETH
 //         uint256 borrowedValue; //DAI
 //         uint256 borrowDate;
 //     }
