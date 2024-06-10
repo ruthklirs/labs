@@ -65,7 +65,7 @@
 //     function addQuote() public payable {
 //         console.log("user", msg.sender, "amount", msg.value);
 //         require(started && block.timestamp < endingBid, "the Auction is closed");
-        
+
 //         updateMax();
 //         if (maxStack.length > 1) {
 //             console.log("zzz");
@@ -77,7 +77,7 @@
 //         Bidder memory newObj = Bidder(address(msg.sender), msg.value);
 //         maxStack.push(newObj);
 //         BidState memory newObj2 = BidState(true, msg.value);
-        
+
 //         addToBalances(address(msg.sender), newObj2);
 //         console.log("userrr", msg.sender, "amount", msg.value);
 //     }

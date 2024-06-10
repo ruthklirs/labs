@@ -1,7 +1,5 @@
-
 // SPDX-License-Identifier: Unlicense
 // pragma solidity >=0.8.17;
-
 
 // contract Store {
 //     uint256 storedValue;
@@ -16,4 +14,4 @@
 //         return storedValue;
 //     }
 // }
-// 
+//
