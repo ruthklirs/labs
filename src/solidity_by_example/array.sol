@@ -13,5 +13,6 @@ contract Array {
     
     function getArr() external view returns(int256[] memory){
         return arr;
+        
     }
 }
