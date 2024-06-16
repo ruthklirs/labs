@@ -25,10 +25,12 @@ contract Array {
     function remove(uint256 i) public {
         delete arr[i];
     }
-    function getLengthArr() public view returns(uint256){
+
+    function getLengthArr() public view returns (uint256) {
         return arr.length;
     }
-    function memoryArray() external{
-        uint256[] memory tempArr=new uint256[](5);
+
+    function memoryArray() external {
+        uint256[] memory tempArr = new uint256[](5);
     }
 }
