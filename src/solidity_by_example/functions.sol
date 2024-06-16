@@ -14,5 +14,4 @@ contract Functions {
         x = i + 5;
         b = true;
     }
-     
 }
